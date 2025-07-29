@@ -11,12 +11,16 @@ const createContainer = async (req, res) => {
       status,
     } = req.body;
 
+    let statusNumber = Number(status)
+  
+    
+
     if (
       !container_tracking_id ||
       !released_at ||
       !expected_arrival_at ||
       !created_by_user_id ||
-      !status
+      (statusNumber !== 1 && statusNumber !== 0)
     ) {
       res.status(400);
       res.send(`Required parameters missing.
@@ -38,7 +42,7 @@ const createContainer = async (req, res) => {
       released_at,
       expected_arrival_at,
       created_by_user_id,
-      status,
+      statusNumber,
     });
 
     return res.status(200).json({
