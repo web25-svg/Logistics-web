@@ -2,6 +2,7 @@ import dbConfig from "../database/db.js";
 import { Sequelize, DataTypes } from "sequelize";
 
 import containerModel from "../models/container-model.js";
+import itemModel from "../models/item-model.js";
 
 
 // Create connection
@@ -21,6 +22,7 @@ db.Sequelize = Sequelize;
 db.connection = dbConnection;
 
 db.containers = containerModel(db.connection, DataTypes);
+db.items = itemModel(db.connection, DataTypes);
 
 
 

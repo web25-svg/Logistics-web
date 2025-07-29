@@ -23,7 +23,9 @@ app.use(cookieParser());
 
 
 import containerRouter from "./routes/container-route.js";
+import itemRouter from "./routes/item-route.js";
 app.use("/api/v1", containerRouter);
+app.use("/api/v1", itemRouter);
 
 
 const PORT = process.env.PORT || 8081;

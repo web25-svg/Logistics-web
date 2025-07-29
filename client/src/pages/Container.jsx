@@ -19,7 +19,7 @@ const Container = () => {
   const loadItems = async () => {
     setIsLoading(true);
     try {
-      const data = await fetchItems();      
+      const data = await fetchItems();
       setItems(data?.findAllContainer);
     } catch (error) {
       console.error("Error loading items:", error.message);
@@ -39,13 +39,15 @@ const Container = () => {
   };
 
   const handleUpdate = async (id, itemData) => {
+    console.log("handleUpdate: ", itemData);
+
     try {
       await updateItem(id, itemData);
       await loadItems();
       setIsModalOpen(false);
       setCurrentItem(null);
     } catch (error) {
-      console.error("Error updating item:", error);
+      console.error("Error updating item:", error.message);
     }
   };
 
@@ -59,7 +61,9 @@ const Container = () => {
   };
 
   const openEditModal = (item) => {
+    console.log("openEditModal: ", item); // return or all the data in db
     setCurrentItem(item);
+    console.log("currentItem: ", currentItem); // return val null
     setIsModalOpen(true);
   };
 

@@ -9,7 +9,7 @@ import {
 } from "../ui/table";
 import { Skeleton } from "../ui/skeleton";
 import TableActions from "./TableActions";
-
+import { formatDateTime } from "../../helper_functions/convertDateTime.js";
 export default function DataTable({ data, loading, onEdit, onDelete }) {
   return (
     <div className="rounded-md border">
@@ -54,8 +54,8 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
                   <TableRow key={item.id}>
                     <TableCell>{item.id}</TableCell>
                     <TableCell>{item.container_tracking_id}</TableCell>
-                    <TableCell>{item.released_at}</TableCell>
-                    <TableCell>{item.status}</TableCell>
+                    <TableCell>{formatDateTime(item.released_at)}</TableCell>
+                    <TableCell>{formatDateTime(item.expected_arrival_at)}</TableCell>
                     <TableCell>
                       <span
                         className={`px-2 py-1 rounded-full text-xs ${
