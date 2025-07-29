@@ -39,9 +39,14 @@ const data = {
   },
   navMain: [
     {
-      title: "Finance",
-      url: "/finance",
+      title: "Conatiner",
+      url: "/container",
       icon: IconDashboard,
+    },
+    {
+      title: "Item",
+      url: "/item",
+      icon: IconListDetails,
     },
     // {
     //   title: "Lifecycle",

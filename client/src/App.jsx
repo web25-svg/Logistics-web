@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import {Routes, Route} from "react-router-dom"
 import data from "./data.json";
 import Conatiner from "./Pages/Container.jsx"
+import Item  from "./pages/Item.jsx";
 
 export default function App() {
   return (
@@ -37,7 +38,9 @@ export default function App() {
                 }
               />
               {/* 👇 Finance Page Route */}
-              <Route path="/finance" element={<Conatiner />} />
+              <Route path="/container" element={<Conatiner />} />
+              {/* 👇 Finance Page Route */}
+              <Route path="/item" element={<Item />} />
             </Routes>
           </div>
         </div>
