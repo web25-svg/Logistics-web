@@ -3,6 +3,9 @@ import { Sequelize, DataTypes } from "sequelize";
 
 import containerModel from "../models/container-model.js";
 import itemModel from "../models/item-model.js";
+import supplierModel from "../models/supplier-model.js";
+import wareHouseModel from "../models/ware-house-model.js";
+import client from "../models/client-model.js";
 
 
 // Create connection
@@ -23,6 +26,9 @@ db.connection = dbConnection;
 
 db.containers = containerModel(db.connection, DataTypes);
 db.items = itemModel(db.connection, DataTypes);
+db.suppliers = supplierModel(db.connection, DataTypes);
+db.warehouse  = wareHouseModel(db.connection, DataTypes);
+db.clients  = client(db.connection, DataTypes);
 
 
 

@@ -1,31 +1,31 @@
 // src/components/FormModal/FormFields.jsx
-import { Controller } from 'react-hook-form';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
+import { Controller } from "react-hook-form";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
+} from "../ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function FormFields({ control }) {
   return (
     <div className="grid gap-4 py-4">
-     
-      {/* Tracking ID */}
+      {/* Name */}
       <div className="grid grid-cols-4 items-center gap-4">
-        <Label htmlFor="container_tracking_id" className="text-right">
-          Tracking ID
+        <Label htmlFor="name" className="text-right">
+          Name
         </Label>
         <Controller
-          name="container_tracking_id"
+          name="name"
           control={control}
-          rules={{ required: 'Tracking ID is required' }}
+          rules={{ required: "Name is required" }}
           render={({ field, fieldState }) => (
             <div className="col-span-3">
-              <Input id="container_tracking_id" {...field} />
+              <Input id="name" {...field} />
               {fieldState.error && (
                 <p className="text-sm text-red-500 mt-1">
                   {fieldState.error.message}
@@ -36,18 +36,18 @@ export default function FormFields({ control }) {
         />
       </div>
 
-      {/* Released At */}
+      {/* Address */}
       <div className="grid grid-cols-4 items-center gap-4">
-        <Label htmlFor="released_at" className="text-right">
-          Released At
+        <Label htmlFor="address" className="text-right">
+          Address
         </Label>
         <Controller
-          name="released_at"
+          name="address"
           control={control}
-          rules={{ required: 'Release date is required' }}
+          rules={{ required: "Address is required" }}
           render={({ field, fieldState }) => (
             <div className="col-span-3">
-              <Input id="released_at" type="date" {...field} />
+              <Textarea id="address" {...field} />
               {fieldState.error && (
                 <p className="text-sm text-red-500 mt-1">
                   {fieldState.error.message}
@@ -58,18 +58,18 @@ export default function FormFields({ control }) {
         />
       </div>
 
-      {/* Expected Arrival At */}
+       {/* Marka */}
       <div className="grid grid-cols-4 items-center gap-4">
-        <Label htmlFor="expected_arrival_at" className="text-right">
-          Expected Arrival
+        <Label htmlFor="marka" className="text-right">
+          Marka
         </Label>
         <Controller
-          name="expected_arrival_at"
+          name="marka"
           control={control}
-          rules={{ required: 'Expected arrival date is required' }}
+          rules={{ required: "Marka is required" }}
           render={({ field, fieldState }) => (
             <div className="col-span-3">
-              <Input id="expected_arrival_at" type="date" {...field} />
+              <Input id="marka" {...field} />
               {fieldState.error && (
                 <p className="text-sm text-red-500 mt-1">
                   {fieldState.error.message}
@@ -88,7 +88,7 @@ export default function FormFields({ control }) {
         <Controller
           name="status"
           control={control}
-          rules={{ required: 'Status is required' }}
+          rules={{ required: "Status is required" }}
           render={({ field }) => (
             <div className="col-span-3">
               <Select onValueChange={field.onChange} value={field.value}>

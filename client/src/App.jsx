@@ -4,16 +4,17 @@ import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import {Routes, Route} from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
 import data from "./data.json";
-import Conatiner from "./Pages/Container.jsx"
-import Item  from "./pages/Item.jsx";
+import Conatiner from "./Pages/Container.jsx";
+import Item from "./pages/Item.jsx";
+import Supplier from "./pages/supplier.jsx";
+import WareHouse from "./pages/ware_house.jsx";
 
 export default function App() {
   return (
     <SidebarProvider
-      
-    style={{
+      style={{
         "--sidebar-width": "calc(var(--spacing) * 72)",
         "--header-height": "calc(var(--spacing) * 12)",
       }}
@@ -23,7 +24,7 @@ export default function App() {
         <SiteHeader />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
-          <Routes>
+            <Routes>
               {/* 👇 Home Route (Your existing dashboard layout) */}
               <Route
                 path="/"
@@ -37,10 +38,11 @@ export default function App() {
                   </div>
                 }
               />
-              {/* 👇 Finance Page Route */}
+              {/* Routes  */}
               <Route path="/container" element={<Conatiner />} />
-              {/* 👇 Finance Page Route */}
               <Route path="/item" element={<Item />} />
+              <Route path="/supplier" element={<Supplier />} />
+              <Route path="/ware-house" element={<WareHouse />} />
             </Routes>
           </div>
         </div>

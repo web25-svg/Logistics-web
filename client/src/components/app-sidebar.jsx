@@ -48,6 +48,16 @@ const data = {
       url: "/item",
       icon: IconListDetails,
     },
+    {
+      title: "WareHouse",
+      url: "/ware-house",
+      icon: IconChartBar,
+    },
+    {
+      title: "Supplier",
+      url: "/supplier",
+      icon: IconFolder,
+    },
     // {
     //   title: "Lifecycle",
     //   url: "#",

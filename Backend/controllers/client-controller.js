@@ -1,0 +1,177 @@
+import db from "../models/index.js";
+const Client = db.clients;
+
+const createClient = async (req, res) => {
+  try {
+    const {
+      name,
+      alias,
+      phone,
+      whatsapp_phone,
+      address,
+      referral_user_id,
+      created_by_user_id,
+      status,
+    } = req.body;
+
+    const statusNumber = Number(status);
+
+     if (
+      !name ||
+      !alias ||
+      !phone ||
+      !whatsapp_phone ||
+      !address ||
+      !created_by_user_id ||
+      (status !== undefined && statusNumber !== 0 && statusNumber !== 1)
+    ) {
+      return res.status(400).json({
+        message: "Missing or invalid fields ❌",
+        required_fields: ["name", "alias", "phone", "whatsapp_phone", "address", "created_by_user_id"],
+        optional_fields: {
+          status: "Must be either 0 or 1 (defaults to 1)",
+          referral_user_id: "Optional",
+        },
+        example: {
+          name: "Main Warehouse",
+          alias: "MW",
+          phone: "03001234567",
+          whatsapp_phone: "03001234567",
+          address: "Some Address",
+          referral_user_id: 1234,
+          created_by_user_id: 5678,
+          status: 1,
+        },
+      });
+    }
+
+    const newClient = await Client.create({
+      name,
+      alias,
+      phone,
+      whatsapp_phone,
+      address,
+      referral_user_id,
+      created_by_user_id,
+      status: statusNumber,
+    });
+
+    return res.status(201).json({
+      message: "Client created successfully",
+      newClient,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error creating client",
+      error: error.message,
+    });
+  }
+};
+
+const getAllClients = async (req, res) => {
+  try {
+    const clients = await Client.findAll({
+      //   where: { status: 1 }, // Active only
+      //   order: [["clientId", "DESC"]],
+    });
+
+    return res.status(200).json({
+      message: "Get all clients succesfully",
+      clients,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error fetching clients",
+      error: error.message,
+    });
+  }
+};
+
+const getSingleClient = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+
+    const client = await Client.findByPk(clientId);
+    if (!client) {
+      return res.status(404).json({
+        success: false,
+        message: "Client not found",
+      });
+    }
+
+    return res.status(200).json({
+      client,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error fetching client",
+      error: error.message,
+    });
+  }
+};
+
+const updateClient = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    const updated = await Client.update(
+      {
+        ...req.body,
+        updated_at: new Date(),
+      },
+      {
+        where: { id: clientId, deleted_at: null },
+      }
+    );
+
+    if (updated[0] === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Client not found or no changes made",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Client updated successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error updating client",
+      error: error.message,
+    });
+  }
+};
+
+const deleteClient = async (req, res) => {
+  try {
+    const { clientId } = req.params;
+    console.log(clientId);
+    
+
+    const deleted = await Client.destroy({
+      where: { clientId },
+    });
+
+    if (!deleted) {
+      return res.status(404).json({
+        message: "Client not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Client deleted (soft) successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error deleting client",
+      error: error.message,
+    });
+  }
+};
+
+export {
+  createClient,
+  getAllClients,
+  getSingleClient,
+  updateClient,
+  deleteClient,
+};

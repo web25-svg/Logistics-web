@@ -1,6 +1,6 @@
-const containerModel = (sequelize, DataTypes) => {
-  const Item = sequelize.define(
-    "Item",
+const warehouseModel = (sequelize, DataTypes) => {
+  const Warehouse = sequelize.define(
+    "Warehouse",
     {
       id: {
         type: DataTypes.BIGINT,
@@ -8,82 +8,68 @@ const containerModel = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-
-      item_unique_key: {
-        type: DataTypes.INTEGER,
-        unique:true,
-        allowNull: false,
-      },
-
       name: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        defaultValue: "Unnamed",
+        // validate: {
+        //   notEmpty: {
+        //     msg: "Warehouse name cannot be empty",
+        //   },
+        // },
       },
-
-      mark: {
+      address: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        defaultValue: "NoMark",
+        // validate: {
+        //   notEmpty: {
+        //     msg: "Address cannot be empty",
+        //   },
+        // },
       },
-
-      packing_description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        defaultValue: "No description",
-      },
-
-      cargo_type_id: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-        // defaultValue: 0, 
-      },
-
-      brand_type: {
-        type: DataTypes.ENUM("Branded", "Non-Branded"),
-        allowNull: false,
-        defaultValue: "Non-Branded",
-      },
-
       created_by_user_id: {
         type: DataTypes.BIGINT,
         allowNull: false,
         defaultValue: 1236789, // Jab tak `users` table banay
       },
-
       status: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0,
-        comment: "0 => Inactive, 1 => Active",
+        defaultValue: 1,
       },
-
       created_at: {
         type: DataTypes.DATE,
         allowNull: true,
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
-
       updated_at: {
         type: DataTypes.DATE,
         allowNull: true,
         defaultValue: null,
+        // defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
-
       deleted_at: {
         type: DataTypes.DATE,
         allowNull: true,
         defaultValue: null,
+        // defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {
-      tableName: "items",
+      tableName: "warehouses",
       timestamps: false,
-      paranoid:true
+      indexes: [
+        {
+          unique: true,
+          fields: ["name"],
+          where: {
+            deleted_at: null,
+          },
+        },
+      ],
     }
   );
 
-  return Item;
+  return Warehouse;
 };
 
-export default containerModel;
+export default warehouseModel;

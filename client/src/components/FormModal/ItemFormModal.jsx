@@ -7,11 +7,10 @@ import {
   DialogTitle,
 } from "../../components/ui/dialog";
 import { useForm } from "react-hook-form";
-import FormFields from "./FormFields";
+import FormFields from "./SupplierFormFields";
 import { Button } from "../ui/button";
 
 export default function FormModal({ isOpen, onClose, onSubmit, initialData }) {
-  
   const {
     handleSubmit,
     control,
@@ -19,9 +18,9 @@ export default function FormModal({ isOpen, onClose, onSubmit, initialData }) {
     formState: { isSubmitting },
   } = useForm({
     defaultValues: initialData || {
-      container_tracking_id: "",
-      released_at: "",
-      expected_arrival_at: "",
+      name: "",
+      address: "",
+      marka: "",
       status: "",
     },
   });
@@ -31,9 +30,9 @@ export default function FormModal({ isOpen, onClose, onSubmit, initialData }) {
       reset(initialData);
     } else {
       reset({
-        container_tracking_id: "",
-        released_at: "",
-        expected_arrival_at: "",
+        name: "",
+        address: "",
+        marka: "",
         status: "",
       });
     }
@@ -41,9 +40,10 @@ export default function FormModal({ isOpen, onClose, onSubmit, initialData }) {
 
   const handleFormSubmit = async (data) => {
     const payload = {
-      container_tracking_id: data.container_tracking_id,
-      released_at: data.released_at,
-      expected_arrival_at: data.expected_arrival_at,
+      item_unique_key: data.item_unique_key,
+      name: data.name,
+      address: data.address,
+      marka: data.marka,
       status: data.status === "active" ? 1 : 0,
       created_by_user_id: 1, // or fetch from auth context
     };

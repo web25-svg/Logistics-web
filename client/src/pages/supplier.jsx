@@ -1,10 +1,10 @@
 // src/pages/Dashboard.jsx
 import { useState, useEffect } from "react";
-import DataTable from "../components/DataTable/itemDataTable.jsx";
+import DataTable from "../components/DataTable/SupplierDataTable.jsx";
 import FormModal from "../components/FormModal/ItemFormModal.jsx";
 import { Button } from "../components/ui/button";
 import { Plus } from "lucide-react";
-import { getAllContainerItems, createContainerItem, updateContainerItem, deleteContainerItem } from "../utils/item-api.js";
+import { getAllSuppliers, createSupplier, updateSupplier, deleteSupplier } from "../utils/supplier-api.js";
 
 const Container = () => {
   const [items, setItems] = useState([]);
@@ -19,7 +19,7 @@ const Container = () => {
   const loadItems = async () => {
     setIsLoading(true);
     try {
-      const data = await getAllContainerItems();
+      const data = await getAllSuppliers();
       setItems(data?.items);
     } catch (error) {
       console.error("Error loading items:", error.message);
@@ -30,7 +30,7 @@ const Container = () => {
 
   const handleCreate = async (itemData) => {
     try {
-      await createContainerItem(itemData);
+      await createSupplier(itemData);
       await loadItems();
       setIsModalOpen(false);
     } catch (error) {
@@ -42,7 +42,7 @@ const Container = () => {
     console.log("handleUpdate: ", itemData);
 
     try {
-      await updateContainerItem(id, itemData);
+      await updateSupplier(id, itemData);
       await loadItems();
       setIsModalOpen(false);
       setCurrentItem(null);
@@ -53,7 +53,7 @@ const Container = () => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteContainerItem(id);
+      await deleteSupplier(id);
       await loadItems();
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -70,7 +70,7 @@ const Container = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Item</h1>
+        <h1 className="text-2xl font-bold">Supplier</h1>
         <Button onClick={() => setIsModalOpen(true)}>
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
