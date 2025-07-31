@@ -75,7 +75,6 @@ const clientModel = (sequelize, DataTypes) => {
     {
       tableName: "clients",
       timestamps: false, 
-      paranoid: true,  
     }
   );
 

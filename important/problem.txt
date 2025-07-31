@@ -1,30 +1,35 @@
 // CONTAINER CRUD PROBLEM //
  
-// First problem ya frontend main jab main data insert karta ho status fields sahi nhi jy rhi db main
 // Second problem ya hain jab main edit karna frontend mai conatiner ko default field nhi ati 
 // Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota 
-
+// Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho
 
 // ITEM CRUD PROBLEM //
 
-// First problem ya hain frontend main jab main data insert karta ho data insert nhi hota
 // Second problem ya hain jab main edit karna frontend mai conatiner ko default field mai nhi ati 
 // Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai
+// Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho
+
 
 // SUPPLIER CRUD PROBLEM //
 
-// First problem ya hain frontend main jab main data insert karta ho data insert nhi hota
 // Second problem ya hain jab main edit karna frontend mai conatiner ko default field mai nhi ati 
 // Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai
-
+// Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho
 
 // WARE HOUSE CRUD PROBLEM //
 
-// First problem ya hain frontend main jab main data insert karta ho data insert nhi hota
 // Second problem ya hain jab main edit karna frontend mai conatiner ko default field mai nhi ati 
 // Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai
-
+// Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho
 
 
 //BACKEND PROBLEM
 //ALL CONTROLLERS MAIN ADD KARNA HAIN UPDATED_AT AND DELETED_AT UPDATE AND DELETE FUNCTION MAI
+
+
+
+// CLIENT CRUD PROBLEM //
+
+// Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai 
+// Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho  

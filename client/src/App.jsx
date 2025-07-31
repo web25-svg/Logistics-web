@@ -10,6 +10,7 @@ import Conatiner from "./Pages/Container.jsx";
 import Item from "./pages/Item.jsx";
 import Supplier from "./pages/supplier.jsx";
 import WareHouse from "./pages/ware_house.jsx";
+import Client from "./pages/client.jsx";
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
               <Route path="/item" element={<Item />} />
               <Route path="/supplier" element={<Supplier />} />
               <Route path="/ware-house" element={<WareHouse />} />
+              <Route path="/client" element={<Client />} />
             </Routes>
           </div>
         </div>

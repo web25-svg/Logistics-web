@@ -6,6 +6,7 @@ import itemModel from "../models/item-model.js";
 import supplierModel from "../models/supplier-model.js";
 import wareHouseModel from "../models/ware-house-model.js";
 import client from "../models/client-model.js";
+import User from "../models/user-model.js";
 
 
 // Create connection
@@ -29,6 +30,7 @@ db.items = itemModel(db.connection, DataTypes);
 db.suppliers = supplierModel(db.connection, DataTypes);
 db.warehouse  = wareHouseModel(db.connection, DataTypes);
 db.clients  = client(db.connection, DataTypes);
+db.users  = User(db.connection, DataTypes);
 
 
 

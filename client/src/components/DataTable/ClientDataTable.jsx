@@ -18,7 +18,11 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Name</TableHead>
+            <TableHead>Alias</TableHead>
+            <TableHead>Phone</TableHead>
+            <TableHead>Whatsapp_Phone</TableHead>
             <TableHead>Address</TableHead>
+            <TableHead>Is_Active</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
@@ -48,12 +52,26 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
               ))
           ) : data?.length > 0 ? (
             <>
-              {data?.map((item) => {   
+              {data?.map((item) => {                
                 return (
                   <TableRow key={item.id}>
-                    <TableCell>{item.id}</TableCell>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.address}</TableCell>
+                    <TableCell>{item?.id}</TableCell>
+                    <TableCell>{item?.name}</TableCell>
+                    <TableCell>{item?.alias}</TableCell>
+                    <TableCell>{item?.phone}</TableCell>
+                    <TableCell>{item?.whatsapp_phone}</TableCell>
+                    <TableCell>{item?.address}</TableCell>
+                    <TableCell>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs ${
+                          item.is_active === 1
+                            ? "bg-green-100 text-green-800"
+                            : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
+                        {item.is_active === 1 ? "Active" : "Inactive"}
+                      </span>
+                    </TableCell>
                     <TableCell>
                       <span
                         className={`px-2 py-1 rounded-full text-xs ${

@@ -79,7 +79,6 @@ const containerModel = (sequelize, DataTypes) => {
     {
       tableName: "items",
       timestamps: false,
-      paranoid:true
     }
   );
 

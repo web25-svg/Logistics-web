@@ -127,7 +127,9 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
   const { itemId } = req.params;
+  
   try {
+   
     const [affectedRows] = await Item.update(
       { deleted_at: new Date() },
       { where: { id: itemId, deleted_at: null } }
@@ -138,6 +140,7 @@ const deleteItem = async (req, res) => {
     }
 
     return res.status(200).json({ message: "Item deleted successfully ✅" });
+    
   } catch (error) {
     return res.status(500).json({ message: "Error ❌", error: error.message });
   }

@@ -58,6 +58,11 @@ const data = {
       url: "/supplier",
       icon: IconFolder,
     },
+    {
+      title: "Client",
+      url: "/client",
+      icon: IconUsers,
+    },
     // {
     //   title: "Lifecycle",
     //   url: "#",

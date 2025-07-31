@@ -12,26 +12,33 @@ const createClient = async (req, res) => {
       referral_user_id,
       created_by_user_id,
       status,
+      is_active
     } = req.body;
 
     const statusNumber = Number(status);
+    const is_activeNumber = Number(is_active);
 
-     if (
+    if (
       !name ||
       !alias ||
       !phone ||
       !whatsapp_phone ||
       !address ||
       !created_by_user_id ||
-      (status !== undefined && statusNumber !== 0 && statusNumber !== 1)
+      (statusNumber !== 0 && statusNumber !== 1) ||
+      (is_activeNumber !== 0 && is_activeNumber !== 1)
     ) {
       return res.status(400).json({
         message: "Missing or invalid fields ❌",
-        required_fields: ["name", "alias", "phone", "whatsapp_phone", "address", "created_by_user_id"],
-        optional_fields: {
-          status: "Must be either 0 or 1 (defaults to 1)",
-          referral_user_id: "Optional",
-        },
+        required_fields: [
+          "name",
+          "alias",
+          "phone",
+          "whatsapp_phone",
+          "address",
+          "created_by_user_id",
+          "is_active"
+        ],
         example: {
           name: "Main Warehouse",
           alias: "MW",
@@ -41,6 +48,7 @@ const createClient = async (req, res) => {
           referral_user_id: 1234,
           created_by_user_id: 5678,
           status: 1,
+          is_active: 1,
         },
       });
     }
@@ -54,6 +62,7 @@ const createClient = async (req, res) => {
       referral_user_id,
       created_by_user_id,
       status: statusNumber,
+      is_active: is_activeNumber,
     });
 
     return res.status(201).json({
@@ -111,8 +120,8 @@ const getSingleClient = async (req, res) => {
 };
 
 const updateClient = async (req, res) => {
-  try {
     const { clientId } = req.params;
+  try {
     const updated = await Client.update(
       {
         ...req.body,
@@ -122,10 +131,10 @@ const updateClient = async (req, res) => {
         where: { id: clientId, deleted_at: null },
       }
     );
+console.log("updated :", updated);
 
     if (updated[0] === 0) {
       return res.status(404).json({
-        success: false,
         message: "Client not found or no changes made",
       });
     }
@@ -144,14 +153,20 @@ const updateClient = async (req, res) => {
 const deleteClient = async (req, res) => {
   try {
     const { clientId } = req.params;
-    console.log(clientId);
+
+    const [affectedRows] = await Client.update(
+      {
+        deleted_at: new Date(),
+      },
+      {
+        where: { id: clientId, deleted_at: null },
+      }
+    );
+
+    console.log("affectedRows: ", affectedRows);
     
 
-    const deleted = await Client.destroy({
-      where: { clientId },
-    });
-
-    if (!deleted) {
+    if (!affectedRows) {
       return res.status(404).json({
         message: "Client not found",
       });
