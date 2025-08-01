@@ -6,42 +6,65 @@ const User = db.users;
 
 const authMiddleware = async (req, res, next) => {
   try {
-
     const token =
-      req.cookies?.token 
+        req.cookies?.token
     //   req.headers("authorization");
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized ❌ - Token missing" });
+      return res
+        .status(401)
+        .json({
+          message: "Unauthorized ❌ - Token missing"});
     }
 
-    try {
-        
-    } catch (error) {
-        
+    const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findOne({
+      where: {
+        id: verifyToken.id,
+        deleted_at: null,
+      },
+    });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized ❌ - User not found" });
     }
 
-   const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = user;
 
-    // // ✅ Find user from DB (optional: check if user still exists or not deleted)
-    // const user = await User.findOne({
-    //   where: {
-    //     id: decoded.id,
-    //     deleted_at: null,
-    //   },
-    // });
-
-    // if (!user) {
-    //   return res.status(401).json({ message: "Unauthorized ❌ - User not found" });
-    // }
-
-    // ✅ Attach user to request
-    req.user = decoded
-
-    next(); // ✅ continue to next middleware/route
+    next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized ❌ - Invalid token", error: error.message });
+    return res
+      .status(401)
+      .json({
+        message: "Unauthorized ❌ - Invalid token",
+        error: error.message,
+      });
   }
 };
 
-export default authMiddleware;
+// const adminMiddleWare = async (req, res, next) => {
+//   try {
+//     const admin = await adminModel.findById(req?.admin?.id);
+
+//     if (!admin) {
+//       return res.status(401).json({ message: "Admin not found" });
+//     }
+
+//     if (admin?.role !== "admin") {
+//       return res.status(401).json({ message: "This user is not admin" });
+//     }
+//     next();
+//   } catch (error) {
+//     return res
+//       .status(500)
+//       .json({ message: "Error in admin middleware", error: error.message });
+//   }
+// };
+
+export {
+    authMiddleware,
+    // adminMiddleWare
+};

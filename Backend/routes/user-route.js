@@ -8,13 +8,13 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user-controller.js";
-import authMiddleware from "../middleware/user-middle-ware.js";
+import { authMiddleware } from "../middleware/user-middle-ware.js";
 
 const router = express.Router();
 
 router.post("/signup", createUser);
 router.post("/login", loginUser);
-router.get("/logout", authMiddleware, logoutUser);
+router.post("/logout", authMiddleware, logoutUser);
 router.get("/get-all-users", getAllUsers);
 router.get("/get-single-user/:userId", getSingleUser);
 router.put("/update-user/:userId", updateUser);

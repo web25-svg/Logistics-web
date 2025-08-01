@@ -18,11 +18,11 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
         <TableHeader>
           <TableRow>
             <TableHead>ID</TableHead>
-            <TableHead>Item_unique_key</TableHead>
+            {/* <TableHead>Item_unique_key</TableHead> */}
             <TableHead>Name</TableHead>
             <TableHead>Mark</TableHead>
             <TableHead>Packing_description</TableHead>
-            <TableHead>Cargo_type_id</TableHead>
+            {/* <TableHead>Cargo_type_id</TableHead> */}
             <TableHead>brand_type</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
@@ -57,11 +57,11 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item.id}</TableCell>
-                    <TableCell>{item.item_unique_key}</TableCell>
+                    {/* <TableCell>{item.item_unique_key}</TableCell> */}
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.mark}</TableCell>
                     <TableCell>{item.packing_description}</TableCell>
-                    <TableCell>{item.cargo_type_id}</TableCell>
+                    {/* <TableCell>{item.cargo_type_id}</TableCell> */}
                     <TableCell>{item.brand_type}</TableCell>
                     <TableCell>
                       <span
