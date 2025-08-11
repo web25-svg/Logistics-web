@@ -11,13 +11,13 @@ const userModel = (sequelize, DataTypes) => {
 
       name: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
 
       email: {
         type: DataTypes.STRING(255),
-        allowNull: false,
-        unique: true,
+        allowNull: true,
+        // unique: true,
       },
 
       email_verified_at: {

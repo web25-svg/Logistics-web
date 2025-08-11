@@ -6,6 +6,9 @@ import Supplier from "./pages/supplier.jsx";
 import WareHouse from "./pages/ware_house.jsx";
 import Client from "./pages/client.jsx";
 import Login from "./pages/login.jsx";
+import Shipment from "./pages/shipment.jsx";
+import ShipmentItems from "./pages/shipment-item.jsx";
+import ShipmentFormPage from "./pages/shipment-form-page.jsx";
 import PrivateRoute from "../src/components/pritate-route.jsx";
 import DashboardLayout from "./components/dashboard-layout.jsx";
 import { ChartAreaInteractive } from "./components/chart-area-interactive.jsx";
@@ -71,6 +74,41 @@ export default function App() {
           element={
             <DashboardLayout>
               <Client />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/shipment"
+          element={
+            <DashboardLayout>
+              <Shipment />
+            </DashboardLayout>
+          }
+        />
+        <Route
+          path="/shipment-item"
+          element={
+            <DashboardLayout>
+              <ShipmentItems />
+            </DashboardLayout>
+          }
+        />
+        {/* Create shipment page */}
+        <Route
+          path="/shipment-new"
+          element={
+            <DashboardLayout>
+              <ShipmentFormPage />
+            </DashboardLayout>
+          }
+        />
+
+        {/* Edit shipment page */}
+        <Route
+          path="/shipment-edit/:id"
+          element={
+            <DashboardLayout>
+              <ShipmentFormPage />
             </DashboardLayout>
           }
         />

@@ -26,9 +26,8 @@ const containerModel = (sequelize, DataTypes) => {
       },
 
       created_by_user_id: {
-        // REFERENCE/RELATION ANOTHER TABLE
-        type: DataTypes.BIGINT,
-        defaultValue: 1236789,
+        type: DataTypes.BIGINT.UNSIGNED,
+        // defaultValue: 1236789,
         // allowNull: false,
       },
 

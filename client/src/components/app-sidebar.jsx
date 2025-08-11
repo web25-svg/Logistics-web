@@ -63,6 +63,16 @@ const data = {
       url: "/client",
       icon: IconUsers,
     },
+    {
+      title: "Shipment",
+      url: "/shipment",
+      icon: IconListDetails,
+    },
+    {
+      title: "ShipmentItem",
+      url: "/shipment-item",
+      icon: IconListDetails,
+    },
     // {
     //   title: "Lifecycle",
     //   url: "#",

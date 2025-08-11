@@ -13,7 +13,7 @@
 
 // SUPPLIER CRUD PROBLEM //
 
-// Second problem ya hain jab main edit karna frontend mai conatiner ko default field mai nhi ati 
+// Second problem ya hain jab main edit karta ho frontend mai conatiner ko default field mai nhi ati 
 // Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai
 // Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho
 
@@ -31,5 +31,15 @@
 
 // CLIENT CRUD PROBLEM //
 
-// Third problem hain jab mai delete karna ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai 
+// Third problem hain jab mai delete karta ho modal sahi open hota hain delete bhi ho jata hain lakin conformation modal open nhi hota or pagination bhi add karna hai 
 // Fourth problem ya hain backend sai data delete ho jata hain soft delete matlab DELETED_AT time save ho jata hain record delete nhi hota lakin mai jab frotnend sai delete karao record delete karo frotnend par record show nai ho  
+
+
+1)LOGIN
+REDIRECTION CORRECT CORRECT
+
+2)DYAMIC VALUES ALL COUNTS
+
+3)SHIPMET ITEMS
+
+4)SHOW ALL USERS

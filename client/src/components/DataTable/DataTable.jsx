@@ -47,9 +47,9 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
                   </TableCell>
                 </TableRow>
               ))
-          ) : data.length > 0 ? (
+          ) : data?.length > 0 ? (
             <>
-              {data.map((item) => {
+              {data?.map((item) => {
                 return (
                   <TableRow key={item.id}>
                     <TableCell>{item.id}</TableCell>

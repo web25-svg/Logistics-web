@@ -27,9 +27,9 @@ const warehouseModel = (sequelize, DataTypes) => {
         // },
       },
       created_by_user_id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
-        defaultValue: 1236789, // Jab tak `users` table banay
+        // defaultValue: 1236789, // Jab tak `users` table banay
       },
       status: {
         type: DataTypes.INTEGER,

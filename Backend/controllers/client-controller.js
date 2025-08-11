@@ -131,7 +131,6 @@ const updateClient = async (req, res) => {
         where: { id: clientId, deleted_at: null },
       }
     );
-console.log("updated :", updated);
 
     if (updated[0] === 0) {
       return res.status(404).json({

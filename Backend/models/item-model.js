@@ -3,7 +3,7 @@ const containerModel = (sequelize, DataTypes) => {
     "Item",
     {
       id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -11,8 +11,8 @@ const containerModel = (sequelize, DataTypes) => {
 
       item_unique_key: {
         type: DataTypes.INTEGER,
-        unique:true,
-        allowNull: false,
+        // unique:true, //problem
+        allowNull: true,
       },
 
       name: {
@@ -34,9 +34,9 @@ const containerModel = (sequelize, DataTypes) => {
       },
 
       cargo_type_id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
-        // defaultValue: 0, 
+        // defaultValue: 0,
       },
 
       brand_type: {
@@ -46,9 +46,9 @@ const containerModel = (sequelize, DataTypes) => {
       },
 
       created_by_user_id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
-        defaultValue: 1236789, // Jab tak `users` table banay
+        // defaultValue: 1236789, // Jab tak `users` table banay
       },
 
       status: {

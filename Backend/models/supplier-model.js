@@ -3,7 +3,7 @@ const itemModel = (sequelize, DataTypes) => {
     "Supplier",
     {
       id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -23,9 +23,9 @@ const itemModel = (sequelize, DataTypes) => {
         defaultValue: "Unknown",
       },
       created_by_user_id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
-        defaultValue: 1236789, // Jab tak `users` table banay
+        // defaultValue: 1236789, // Jab tak `users` table banay
       },
       status: {
         type: DataTypes.INTEGER,
@@ -43,7 +43,7 @@ const itemModel = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
         defaultValue: null,
-        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+        // defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
       deleted_at: {
         type: DataTypes.DATE,
