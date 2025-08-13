@@ -92,6 +92,7 @@ const getAllShipmentItems = async (req, res) => {
         { model: db.shipments, as: "shipment" },
         { model: db.users, as: "created_by_user" },
       ],
+      order: [["created_at", "DESC"]], // latest pehle
     });
 
     return res.status(200).json({

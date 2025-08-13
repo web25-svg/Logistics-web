@@ -1,11 +1,12 @@
 import db from "../models/index.js";
 const Shipment = db.shipments;
 const ShipmentItem = db.shipment_items;
-// const { Shipment, ShipmentItem } = db;
 
 const createShipment = async (req, res) => {
+  const t = await db.connection.transaction();
+
   try {
-    const {
+    let {
       shipment_tracking_id,
       recipt_no,
       recieved_from,
@@ -21,57 +22,63 @@ const createShipment = async (req, res) => {
       total_receivable_amount,
       description,
       receiving_airport_id,
-      // shipment_items,
+      shipment_items,
     } = req.body;
 
     const statusNumber = Number(status);
 
-    let shipmentItems = [];
-    if (req.body.shipment_items) {
-      shipmentItems = JSON.parse(req.body.shipment_items);
+    if (typeof shipment_items === "string") {
+      shipment_items = JSON.parse(shipment_items);
+    } else {
+      shipment_items = req.body.shipment_items || [];
     }
+
+    console.log("Req.body data: ", req.body);
 
     const fileUploadPath = req.files?.air_way_bill_image?.[0]?.filename || null;
 
     // ✅ Step 1: Create Shipment
-    const newShipment = await Shipment.create({
-      shipment_tracking_id,
-      recipt_no,
-      recieved_from,
-      marka,
-      client_id,
-      fully_loading_date,
-      created_by_user_id,
-      status: statusNumber,
-      air_way_bill_image: fileUploadPath,
-      total_kgs,
-      total_cartons,
-      total_cbm,
-      rate,
-      total_receivable_amount,
-      description,
-      receiving_airport_id,
-      created_at: new Date(),
-    });
+    const newShipment = await Shipment.create(
+      {
+        shipment_tracking_id,
+        recipt_no,
+        recieved_from,
+        marka,
+        client_id,
+        fully_loading_date,
+        created_by_user_id,
+        status: statusNumber,
+        air_way_bill_image: fileUploadPath,
+        total_kgs,
+        total_cartons,
+        total_cbm,
+        rate,
+        total_receivable_amount,
+        description,
+        receiving_airport_id,
+        created_at: new Date(),
+      },
+      { transaction: t }
+    );
 
-    // ✅ Step 2: If shipment_items array exists, insert them with shipment_id
-    if (shipmentItems && shipmentItems.length > 0) {
-      const shipmentItemsWithID = shipmentItems.map((item) => ({
+    // Step 2: Create shipment items
+    if (shipment_items.length > 0) {
+      const mappedItems = shipment_items.map((item) => ({
         ...item,
-        shipment_id: newShipment.id, // 🔗 add relation
+        shipment_id: newShipment.id,
         created_at: new Date(),
       }));
-      console.log("shipmentItemsWithID: ", shipmentItemsWithID);
-
-      await ShipmentItem.bulkCreate(shipmentItemsWithID);
+      await ShipmentItem.bulkCreate(mappedItems, { transaction: t });
     }
 
+    await t.commit();
     return res.status(201).json({
-      message: "Shipment + Shipment items created successfully ✅",
+      message: "Shipment & items created successfully ✅",
       shipment: newShipment,
     });
+
   } catch (error) {
-    console.error(error);
+    await t.rollback();
     return res.status(500).json({
       message: "Error creating shipment ❌",
       error: error.message,
@@ -87,7 +94,7 @@ const getAllShipments = async (req, res) => {
         {
           model: db.ports,
           as: "receiving_airport",
-          attributes: ["id", "name"], // sirf zaruri fields
+          attributes: ["id", "name"],
         },
         {
           model: db.shipment_items,
@@ -104,12 +111,12 @@ const getAllShipments = async (req, res) => {
         {
           model: db.clients,
           as: "client",
-          // attributes: ["id", "name", "email"], // Jo fields chahiye, ya hata bhi sakte ho attributes
+          // attributes: ["id", "name", "email"],
         },
         {
           model: db.users,
           as: "created_by_user",
-          // attributes: ["id", "username", "email"], // Jo fields chahiye
+          // attributes: ["id", "username", "email"],
         },
       ],
       order: [["created_at", "DESC"]], // latest pehle
@@ -195,7 +202,7 @@ const updateShipment = async (req, res) => {
   const t = await db.connection.transaction();
 
   try {
-    const {
+    let {
       shipment_tracking_id,
       recipt_no,
       recieved_from,
@@ -216,13 +223,13 @@ const updateShipment = async (req, res) => {
 
     const statusNumber = Number(status);
 
-    // If shipment_items is string (JSON), parse it
-    let shipmentItems = shipment_items;
     if (typeof shipment_items === "string") {
-      shipmentItems = JSON.parse(shipment_items);
+      shipment_items = JSON.parse(shipment_items);
+    } else {
+      shipment_items = req.body.shipment_items || [];
     }
 
-    const fileUploadPath = req.files?.air_way_bill_image?.[0]?.filename || undefined;
+    const fileUploadPath = req.files?.air_way_bill_image?.[0]?.filename || null;
 
     // Step 1: Update Shipment main record
     const updateFields = {
@@ -261,8 +268,8 @@ const updateShipment = async (req, res) => {
     }
 
     // Step 2: Update/Create shipment items if provided
-    if (Array.isArray(shipmentItems)) {
-      for (const item of shipmentItems) {
+    if (Array.isArray(shipment_items)) {
+      for (const item of shipment_items) {
         if (item.id) {
           // Update existing shipment item
           await ShipmentItem.update(
@@ -305,34 +312,47 @@ const updateShipment = async (req, res) => {
 };
 
 const deleteShipment = async (req, res) => {
+  const t = await db.connection.transaction(); // transaction start
   try {
     const { shipmentId } = req.params;
 
+    // Step 1: Soft delete shipment
     const [affectedRows] = await Shipment.update(
-      {
-        deleted_at: new Date(),
-      },
+      { deleted_at: new Date() },
       {
         where: { id: shipmentId, deleted_at: null },
+        transaction: t
       }
     );
 
     if (!affectedRows) {
-      return res.status(404).json({
-        message: "Shipment not found ❌",
-      });
+      await t.rollback();
+      return res.status(404).json({ message: "Shipment not found ❌" });
     }
 
+    // Step 2: Soft delete related shipment items
+    await ShipmentItem.update(
+      { deleted_at: new Date() },
+      {
+        where: { shipment_id: shipmentId, deleted_at: null },
+        transaction: t
+      }
+    );
+
+    await t.commit();
     return res.status(200).json({
-      message: "Shipment soft-deleted successfully ✅",
+      message: "Shipment and related items soft-deleted successfully ✅"
     });
+
   } catch (error) {
+    await t.rollback();
     return res.status(500).json({
       message: "Error deleting shipment ❌",
-      error: error.message,
+      error: error.message
     });
   }
 };
+
 
 export {
   createShipment,

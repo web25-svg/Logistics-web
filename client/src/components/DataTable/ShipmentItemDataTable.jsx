@@ -65,7 +65,7 @@ export default function DataTable({ data, loading, onEdit, onDelete }) {
                   <TableCell>{item?.specification || "N/A"}</TableCell>
                   <TableCell>{item?.packing_remarks || "N/A"}</TableCell>
                   <TableCell>{item?.brand_type || "N/A"}</TableCell>
-                  <TableCell>{item?.is_loaded || "N/A"}</TableCell>
+                  <TableCell>{item?.is_loaded === 1 ? "Loaded" : "Unloaded" || "N/A"}</TableCell>
                   <TableCell>
                     <span
                       className={`px-2 py-1 rounded-full text-xs ${

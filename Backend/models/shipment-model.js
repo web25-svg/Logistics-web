@@ -10,8 +10,8 @@ const shipmentModel = (sequelize, DataTypes) => {
       },
 
       shipment_tracking_id: {
-        type: DataTypes.INTEGER,
-        unique: true,
+        type: DataTypes.BIGINT.UNSIGNED,
+        // unique: true,
         allowNull: false,
       },
 

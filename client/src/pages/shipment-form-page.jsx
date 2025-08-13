@@ -31,7 +31,8 @@ export default function ShipmentFormPage() {
       rate: "",
       total_receivable_amount: "",
       description: "",
-      status: "1", // default active
+      status: "1",
+      is_loaded: "0",
       air_way_bill_image: null,
       shipment_items: [],
     },
@@ -42,50 +43,51 @@ export default function ShipmentFormPage() {
     name: "shipment_items",
   });
 
-useEffect(() => {
-  if (isEditMode) {
-    getShipmentById(id)
-      .then((res) => {
-        if (res?.shipment) {
-          reset({
-            shipment_tracking_id: res.shipment.shipment_tracking_id || "",
-            recipt_no: res.shipment.recipt_no || "",
-            recieved_from: res.shipment.recieved_from || "",
-            marka: res.shipment.marka || "",
-            client_id: res.shipment.client_id || "",
-            fully_loading_date: res.shipment.fully_loading_date
-              ? res.shipment.fully_loading_date.split("T")[0]
-              : "",
-            receiving_airport_id: res.shipment.receiving_airport_id || "",
-            total_kgs: res.shipment.total_kgs || "",
-            total_cartons: res.shipment.total_cartons || "",
-            total_cbm: res.shipment.total_cbm || "",
-            rate: res.shipment.rate || "",
-            total_receivable_amount: res.shipment.total_receivable_amount || "",
-            description: res.shipment.description || "",
-            status: String(res.shipment.status ?? "1"),
-            air_way_bill_image: null,
-            shipment_items: (res.shipment.shipment_items || []).map((item) => ({
-              ...item,
-              // Ensure these fields are strings, fallback if not present
-              status: String(item.status ?? "1"),
-              cargo_type_id: item.cargo_type_id ?? "",
-              is_loaded: String(item.is_loaded ?? "0"),
-            })),
-          });
-        }
-      })
-      .catch((err) => {
-        toast.error(err.response?.data?.message || "Error loading shipment");
-        console.error(err.message);
-      });
-  }
-}, [id, isEditMode, reset]);
-
+  useEffect(() => {
+    if (isEditMode) {
+      getShipmentById(id)
+        .then((res) => {
+          if (res?.shipment) {
+            reset({
+              shipment_tracking_id: res.shipment.shipment_tracking_id || "",
+              recipt_no: res.shipment.recipt_no || "",
+              recieved_from: res.shipment.recieved_from || "",
+              marka: res.shipment.marka || "",
+              client_id: res.shipment.client_id || "",
+              fully_loading_date: res.shipment.fully_loading_date
+                ? res.shipment.fully_loading_date.split("T")[0]
+                : "",
+              receiving_airport_id: res.shipment.receiving_airport_id || "",
+              total_kgs: res.shipment.total_kgs || "",
+              total_cartons: res.shipment.total_cartons || "",
+              total_cbm: res.shipment.total_cbm || "",
+              rate: res.shipment.rate || "",
+              total_receivable_amount:
+                res.shipment.total_receivable_amount || "",
+              description: res.shipment.description || "",
+              status: String(res.shipment.status ?? "1"),
+              air_way_bill_image: null,
+              shipment_items: (res.shipment.shipment_items || []).map(
+                (item) => ({
+                  ...item,
+                  // Ensure these fields are strings, fallback if not present
+                  status: String(item.status ?? "1"),
+                  cargo_type_id: item.cargo_type_id ?? "",
+                  is_loaded: String(item.is_loaded ?? "0"),
+                })
+              ),
+            });
+          }
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.message || "Error loading shipment");
+          console.error(err.message);
+        });
+    }
+  }, [id, isEditMode, reset]);
 
   const onSubmit = async (data) => {
     try {
-      // Add user id inside shipment_items
       const shipmentItemsWithUser = data.shipment_items.map((item) => ({
         ...item,
         created_by_user_id: user?.id,
